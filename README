@@ -1,0 +1,31 @@
+This is a little something I put together because I wanted to be able to get hold of my gamerscore
+for use in forum sigs, but didn't have access to the XBox Live API.
+
+There are two parts to it: the gamercard parsing library (gamercard.php) and the sig image builder
+I wrapped around it.
+
+The parser library, given a gamertag, will grab the HTML gamercard from live.xbox.com and extract
+the gamerscore and a few other salient details from it, returning a handy GamerCard object, which
+is just a data container for the gamercard information.
+
+The signature generator should be installed in a directory called "gamercard" in your web server.
+
+It is built to be modular so you can create a new sig simply by creating a new
+includable php file. So, if you're me (BSLSimes) and you want to create a new sig called "awesome",
+you create a file named awesome_sig.php. In this file you define a function named create_sig, which
+takes parameters $gamertag and $filetype, which will be the tag and image file extension from the 
+requested URL. It should call getGamerCard() in the gamercard library to get the information for
+the requested tag, and return an image object representing the completed signature image.
+
+The .htaccess file supplied rewrites all non-".php" URLs to point to index.php, which extracts
+from the URL path information about the sig type and the gamerscore. So, to continue our earlier
+example, we'd use the URL "http://myserver.com/gamercard/awesome/BSLSimes.jpg" to get a JPEG
+version of the "awesome" signature using my gamertag.
+
+A couple of examples are included, the images are included so that the examples work but I'd prefer
+it if you didn't use them. One of them has my gamertag on it anyway so it would be a bit pointless.
+:)
+
+
+Uses php5_dom_wrapper.php by Alexandre Alapetite for PHP 5 compatibility, 
+see http://alexandre.alapetite.fr/doc-alex/domxml-php4-php5/
